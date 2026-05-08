@@ -36,28 +36,34 @@ try {
   }
 } catch (e) { /* ignore */ }
 
-// CUSTOM FETCH: Forzamos a que los headers de Auth nunca vayan duplicados
-const customFetch = async (input: RequestInfo | URL, init?: RequestInit) => {
+// LIMPIEZA AGRESIVA DE HEADERS: Patch global de fetch para interceptar CUALQUIER llamada
+const originalFetch = window.fetch;
+window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
   if (init?.headers) {
     const headers = new Headers(init.headers)
     const deduplicate = (name: string) => {
       const value = headers.get(name)
-      if (value && value.includes('Bearer ')) {
-        const parts = value.split('Bearer ').pop()?.split('.') || []
-        if (parts.length > 3) headers.set(name, `Bearer ${parts.slice(0, 3).join('.')}`)
-      } else if (value && value.includes('.') && value.split('.').length > 3) {
-        headers.set(name, value.split('.').slice(0, 3).join('.'))
+      if (!value) return
+      
+      // Buscamos el primer JWT válido (3 partes unidas por puntos que empiezan por eyJ)
+      const jwtMatch = value.match(/eyJ[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+/g)
+      if (jwtMatch && jwtMatch.length > 0) {
+        const cleanToken = jwtMatch[0]
+        // Si el valor actual es diferente al limpio (estaba duplicado o sucio), lo corregimos
+        const expectedValue = name === 'Authorization' ? `Bearer ${cleanToken}` : cleanToken
+        if (value !== expectedValue) {
+          headers.set(name, expectedValue)
+        }
       }
     }
+
     deduplicate('Authorization')
     deduplicate('apikey')
     
-    // Retornamos la llamada con los headers limpios
-    return fetch(input, { ...init, headers })
+    // Sobrescribimos init.headers con los corregidos
+    init = { ...init, headers }
   }
-  return fetch(input, init)
+  return originalFetch(input, init)
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-  global: { fetch: customFetch }
-})
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)
