@@ -134,12 +134,15 @@ export const Login = () => {
           </button>
         </form>
 
-        <div className="mt-10 text-center">
+        <div className="mt-10 text-center pb-10">
           <p className="text-white/40 text-sm">
             ¿No tienes una cuenta?{' '}
             <Link to="/register" className="text-brand-primary font-bold">
               Regístrate ahora
             </Link>
+          </p>
+          <p className="text-white/10 text-[10px] mt-10 uppercase tracking-widest">
+            Build v1.0.8 - Nuclear Patch Active
           </p>
         </div>
       </motion.div>
