@@ -37,9 +37,9 @@ try {
 } catch (e) { /* ignore */ }
 
 // CUSTOM FETCH: Forzamos a que los headers de Auth nunca vayan duplicados
-const customFetch = async (url: string, options: any = {}) => {
-  if (options.headers) {
-    const headers = new Headers(options.headers)
+const customFetch = async (input: RequestInfo | URL, init?: RequestInit) => {
+  if (init?.headers) {
+    const headers = new Headers(init.headers)
     const deduplicate = (name: string) => {
       const value = headers.get(name)
       if (value && value.includes('Bearer ')) {
@@ -51,9 +51,11 @@ const customFetch = async (url: string, options: any = {}) => {
     }
     deduplicate('Authorization')
     deduplicate('apikey')
-    options.headers = headers
+    
+    // Retornamos la llamada con los headers limpios
+    return fetch(input, { ...init, headers })
   }
-  return fetch(url, options)
+  return fetch(input, init)
 }
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
