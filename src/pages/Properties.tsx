@@ -8,7 +8,6 @@ import { useUIStore } from '../stores/uiStore'
 import { formatCurrency, cn } from '../lib/utils'
 import { BottomSheet } from '../components/ui/BottomSheet'
 import { shareOrCopy } from '../lib/share'
-import { supabase } from '../lib/supabase'
 import { useT } from '../stores/prefsStore'
 
 const FilterChip = ({ label, active, onClick }: any) => (

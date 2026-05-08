@@ -6,7 +6,6 @@ import { Toast } from '../ui/Toast'
 import { useUIStore } from '../../stores/uiStore'
 
 export const AppLayout = () => {
-  const navigate = useNavigate()
   const { setShowFABSheet } = useUIStore()
 
   return (

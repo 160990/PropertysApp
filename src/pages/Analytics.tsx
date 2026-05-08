@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { TrendingUp, Users, Building2, Target, Download } from 'lucide-react'
+import { TrendingUp, Users, Building2, Target } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import { useAuthStore } from '../stores/authStore'
 import { formatCurrency } from '../lib/utils'

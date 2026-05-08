@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, MapPin, Bed, Bath, Maximize, Edit2, Share2, MessageSquare, Copy } from 'lucide-react'
+import { ChevronLeft, MapPin, Bed, Bath, Maximize, Edit2, MessageSquare, Copy } from 'lucide-react'
 import { usePropertyStore } from '../stores/propertyStore'
 import { useUIStore } from '../stores/uiStore'
 import { formatCurrency, cn } from '../lib/utils'
 import { shareOrCopy } from '../lib/share'
-import { useT } from '../stores/prefsStore'
 
 const SWIPE_CONFIDENCE_THRESHOLD = 10000;
 const swipePower = (offset: number, velocity: number) => {
@@ -16,7 +15,6 @@ const swipePower = (offset: number, velocity: number) => {
 export const PropertyDetail = () => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const t = useT()
   const { properties } = usePropertyStore()
   const { toast } = useUIStore()
   
@@ -80,7 +78,7 @@ export const PropertyDetail = () => {
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={1}
-                onDragEnd={(e, { offset, velocity }) => {
+                onDragEnd={(_, { offset, velocity }) => {
                   const swipe = swipePower(offset.x, velocity.x);
                   if (swipe < -SWIPE_CONFIDENCE_THRESHOLD) {
                     paginate(1);
@@ -95,7 +93,7 @@ export const PropertyDetail = () => {
             {/* Indicadores (Único elemento en la imagen para saber que hay más fotos) */}
             {photos.length > 1 && (
               <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-10 pointer-events-none">
-                {photos.map((_, idx) => (
+                {photos.map((_, idx: number) => (
                   <div 
                     key={idx}
                     className={cn(

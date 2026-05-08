@@ -3,8 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   ChevronLeft, ChevronRight, X, Camera, Image as ImageIcon,
-  MapPin, Check, Save, Building2, Home, Store, TreePine,
-  Building, Warehouse, Landmark, Loader2, Eye, EyeOff, Tag, FileText
+  Check, Save, Building2, Home, Store, TreePine,
+  Building, Warehouse, Landmark, Loader2
 } from 'lucide-react'
 import { cn } from '../lib/utils'
 import { usePropertyStore } from '../stores/propertyStore'
@@ -36,7 +36,7 @@ const provinces = ['Panamá', 'Panamá Oeste', 'Colón', 'Chiriquí', 'Coclé', 
 export const PropertyForm = () => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { addProperty, updateProperty, properties, fetchProperties } = usePropertyStore()
+  const { addProperty, updateProperty, fetchProperties } = usePropertyStore()
   const { user } = useAuthStore()
   const { toast } = useUIStore()
 

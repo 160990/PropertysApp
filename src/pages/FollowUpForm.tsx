@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { X, Calendar, Clock, MessageSquare, Phone, Users, Check, Loader2, Tag } from 'lucide-react'
+import { X, Calendar, MessageSquare, Phone, Users, Check, Loader2, Tag } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import { useAuthStore } from '../stores/authStore'
 import { useUIStore } from '../stores/uiStore'
@@ -21,7 +20,6 @@ export const FollowUpForm = () => {
   const { toast } = useUIStore()
   const [loading, setLoading] = useState(false)
   const [clients, setClients] = useState<any[]>([])
-  const [searching, setSearching] = useState(false)
 
   const [formData, setFormData] = useState({
     client_id: '',

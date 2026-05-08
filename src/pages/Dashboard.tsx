@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Building2, Users, Calendar, Target, ArrowUpRight, Clock, Plus, Phone, MessageSquare } from 'lucide-react'
+import { Building2, Users, Calendar, Target, ArrowUpRight, Clock, Phone, MessageSquare } from 'lucide-react'
 import { useAuthStore } from '../stores/authStore'
 import { useT, usePrefsStore } from '../stores/prefsStore'
 import { supabase } from '../lib/supabase'

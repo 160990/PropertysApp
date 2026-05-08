@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { X, Shield, FileText, Lock, Eye, Trash2, Download, Phone, Mail, ExternalLink } from 'lucide-react'
+import { X, Shield, FileText, Lock, Eye, Trash2, Download, Mail, ExternalLink } from 'lucide-react'
 
 export const PrivacyPage = () => {
   const navigate = useNavigate()

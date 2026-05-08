@@ -1,73 +1,39 @@
-# React + TypeScript + Vite
+# PropertysApp — CRM Inmobiliario Premium
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+CRM inmobiliario móvil de alto rendimiento diseñado para agentes en Panamá.
 
-Currently, two official plugins are available:
+## 🚀 Desarrollo Local
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1. Instala las dependencias:
+   ```bash
+   npm install
+   ```
 
-## React Compiler
+2. Configura las variables de entorno:
+   Crea un archivo `.env.local` con:
+   ```env
+   VITE_SUPABASE_URL=tu_url
+   VITE_SUPABASE_ANON_KEY=tu_anon_key
+   ```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+3. Inicia el servidor:
+   ```bash
+   npm run dev
+   ```
 
-## Expanding the ESLint configuration
+## 📱 Visualización en Móvil (Misma Red)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Para probar la app en tu celular mientras desarrollas:
+1. Asegúrate de que el servidor esté corriendo con la opción `--host` (ya configurado por defecto en `vite.config.ts`).
+2. Busca tu IP local (ej: `192.168.0.2`).
+3. Abre en tu celular: `http://<tu-ip>:5173`.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🌐 Despliegue en Vercel
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+1. Sube este repositorio a GitHub.
+2. En Vercel, importa el proyecto.
+3. Configura las **Environment Variables** en Vercel con los mismos valores de `.env.local`.
+4. El despliegue será automático en cada commit a `main`.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+Desarrollado con React + TypeScript + Vite + Tailwind CSS + Supabase.
