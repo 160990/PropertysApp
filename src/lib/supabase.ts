@@ -27,4 +27,35 @@ if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error('Faltan variables de entorno para Supabase')
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+// LIMPIEZA DE SESIÓN CORRUPTA: Si el navegador guardó un token triplicado en localStorage, lo borramos
+try {
+  const storageKey = `sb-${new URL(supabaseUrl).hostname.split('.')[0]}-auth-token`
+  const stored = localStorage.getItem(storageKey)
+  if (stored && (stored.match(/\.eyJ/g) || []).length > 2) {
+    localStorage.removeItem(storageKey)
+  }
+} catch (e) { /* ignore */ }
+
+// CUSTOM FETCH: Forzamos a que los headers de Auth nunca vayan duplicados
+const customFetch = async (url: string, options: any = {}) => {
+  if (options.headers) {
+    const headers = new Headers(options.headers)
+    const deduplicate = (name: string) => {
+      const value = headers.get(name)
+      if (value && value.includes('Bearer ')) {
+        const parts = value.split('Bearer ').pop()?.split('.') || []
+        if (parts.length > 3) headers.set(name, `Bearer ${parts.slice(0, 3).join('.')}`)
+      } else if (value && value.includes('.') && value.split('.').length > 3) {
+        headers.set(name, value.split('.').slice(0, 3).join('.'))
+      }
+    }
+    deduplicate('Authorization')
+    deduplicate('apikey')
+    options.headers = headers
+  }
+  return fetch(url, options)
+}
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  global: { fetch: customFetch }
+})
