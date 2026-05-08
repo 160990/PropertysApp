@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { motion } from 'framer-motion'
 import { Phone, MessageSquare, Mail, Globe, MapPin, Grid, List as ListIcon } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import { formatCurrency, cn } from '../lib/utils'

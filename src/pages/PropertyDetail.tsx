@@ -93,7 +93,7 @@ export const PropertyDetail = () => {
             {/* Indicadores (Único elemento en la imagen para saber que hay más fotos) */}
             {photos.length > 1 && (
               <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-10 pointer-events-none">
-                {photos.map((_, idx: number) => (
+                {photos.map((_: any, idx: number) => (
                   <div 
                     key={idx}
                     className={cn(
